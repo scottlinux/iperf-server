@@ -11,6 +11,7 @@ Requirements
 ------------
 
 Fedora 25+ for iperf server
+
 Ansible 2.2.0+ to run playbook
 
 Role Variables
@@ -21,7 +22,9 @@ n/a
 Dependencies
 ------------
 
-Fedora packages: python2-dnf ansible python-firewall git
+Fedora packages: 
+
+    python2-dnf ansible python-firewall git
 
 Example Playbook
 ----------------
