@@ -1,0 +1,56 @@
+# main.yaml | iperf-server
+--- 
+- 
+  name: "upgrade all fedora packages"
+  dnf: 
+    name: "*"
+    state: latest
+- 
+  name: "install needed packages for playbook"
+  package: name="{{ item }}" state=latest
+  with_items: 
+    - iperf3
+    - tmux
+    - ntp
+    - python2-dnf 
+    - ansible 
+    - python-firewall 
+    - git    
+
+-
+  name: "allow ssh in firewalld"
+  firewalld: 
+    permanent: true
+    service: ssh
+    state: enabled
+- 
+  name: "allow iperf in firewalld | 5201/tcp"
+  firewalld: port=5201/tcp permanent=true state=enabled
+
+-
+  name: "allow iperf in firewalld | 5201/udp"
+  firewalld: port=5201/udp permanent=true state=enabled
+
+- 
+  name: "allow iperf in firewalld | 5001/tcp"
+  firewalld: port=5001/tcp permanent=true state=enabled
+
+-
+  name: "allow iperf in firewalld | 5001/udp"
+  firewalld: port=5001/udp permanent=true state=enabled
+
+- 
+  name: "create iperf user to run service"
+  user: name=iperf shell=/sbin/nologin
+- 
+  name: "install iperf3 unit file for systemd"
+  template: 
+    dest: /etc/systemd/system/iperf3.service
+    src: iperf3.service.j2
+- 
+  name: "enable and start iperf3 service"
+  systemd: 
+    daemon_reload: true
+    enabled: true
+    name: iperf3
+    state: started
