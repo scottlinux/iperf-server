@@ -13,9 +13,10 @@
     - tmux
     - ntp
     - python2-dnf 
+    - ansible 
     - python-firewall 
     - git    
-    
+
 -
   name: "allow ssh in firewalld"
   firewalld: 
@@ -29,6 +30,14 @@
 -
   name: "allow iperf in firewalld | 5201/udp"
   firewalld: port=5201/udp permanent=true state=enabled
+
+- 
+  name: "allow iperf in firewalld | 5001/tcp"
+  firewalld: port=5001/tcp permanent=true state=enabled
+
+-
+  name: "allow iperf in firewalld | 5001/udp"
+  firewalld: port=5001/udp permanent=true state=enabled
 
 - 
   name: "create iperf user to run service"
