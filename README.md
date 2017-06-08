@@ -1,4 +1,4 @@
-Role Name
+iperf-server
 =========
 
 Instant iperf server!
